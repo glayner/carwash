@@ -21,10 +21,25 @@ class ReserveController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-    const reserves = await Reserve.query()
+    const { type, carWashId } = request.get()
+    let reservesQuery = Reserve.query()
       .with('carWashers')
       .with('cars')
-      .fetch()
+
+    if (type && type === 'vacant') {
+      reservesQuery = reservesQuery.doesntHave('cars')
+        .where('reserve_date', '>=', new Date())
+        .where('status', 'disponível')
+    } else if (type && carWashId && type === 'reserved') {
+      reservesQuery = reservesQuery.where('car_wash_id', carWashId)
+        .whereHas('cars')
+        .orderBy('id', 'desc')
+    } else if (type && carWashId && type === 'all') {
+      reservesQuery = reservesQuery.where('car_wash_id', carWashId)
+        .orderBy('id', 'desc')
+    }
+
+    const reserves = await reservesQuery.fetch()
     return response.json(reserves)
   }
 
@@ -39,15 +54,15 @@ class ReserveController {
   async store ({ request, response }) {
     const { ...data } = request.only([
       'reserve_date',
-      'status',
-      'amount',
       'car_wash_id'
     ])
     const carwash = await CarWash.find(data.car_wash_id)
     if (!carwash) {
       return response.status(400).json({ error: 'Lavajato inexistente' })
     }
-    const reserve = await Reserve.create(data)
+
+    const reserve = await Reserve.create({ ...data, status: 'disponível', amount: 0 })
+
     await reserve.load('carWashers')
     return response.json(reserve)
   }
@@ -83,26 +98,17 @@ class ReserveController {
     if (!reserve) {
       return response.status(400).json({ error: 'Reserva inexistente' })
     }
-    const { ...data } = request.only([
-      'reserve_date',
-      'status',
-      'amount',
-      'car_wash_id',
+    const { car_id: carId } = request.only([
       'car_id'
     ])
-    if (data.car_wash_id) {
-      const carwash = await CarWash.find(data.car_wash_id)
-      if (!carwash) {
-        return response.status(400).json({ error: 'Lavajato inexistente' })
-      }
-    }
-    if (data.car_id) {
-      const car = await Car.find(data.car_id)
+
+    if (carId) {
+      const car = await Car.find(carId)
       if (!car) {
         return response.status(400).json({ error: 'Carro inexistente' })
       }
     }
-    await reserve.merge(data)
+    await reserve.merge({ car_id: carId, status: 'reservado' })
     await reserve.save()
     await reserve.loadMany(['cars', 'carWashers'])
     return response.json(reserve)

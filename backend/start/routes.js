@@ -30,4 +30,6 @@ Route.group(() => {
   Route.resource('carwashes', 'CarWashController').apiOnly()
 
   Route.resource('reserves', 'ReserveController').apiOnly()
+
+  Route.resource('status', 'StatusReserveController').apiOnly()
 }).middleware(['auth'])
