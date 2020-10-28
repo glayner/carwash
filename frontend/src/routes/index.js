@@ -5,6 +5,9 @@ import Route from './Route';
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 
+import Reserve from '~/pages/Reserve';
+import MakeReserve from '~/pages/Reserve/MakeReserve';
+
 import Enrollment from '~/pages/Enrollment';
 import ManageEnrollment from '~/pages/Enrollment/ManageEnrollment';
 import RegisterEnrollment from '~/pages/Enrollment/RegisterEnrollment';
@@ -24,6 +27,9 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SignIn} />
       <Route path="/register" exact component={SignUp} />
+
+      <Route path="/reserve" component={Reserve} isPrivate />
+      <Route path="/reservemake/:id" component={MakeReserve} isPrivate />
 
       <Route path="/enrollment" component={Enrollment} isPrivate />
       <Route

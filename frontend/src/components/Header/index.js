@@ -23,14 +23,14 @@ export default function Header() {
       <Content>
         <nav>
           <div>
-            <img src={logoImage} alt="GymPoint" />
-            <span>GYMPOINT</span>
+            <img src={logoImage} alt="carWash" />
+            <span>CARWASH</span>
           </div>
           <Link
-            className={newUrl === 'student' ? 'selected' : ''}
-            to="/student"
+            className={newUrl === 'reserve' ? 'selected' : ''}
+            to="/reserve"
           >
-            ALUNOS
+            RESERVA
           </Link>
           <Link className={newUrl === 'plan' ? 'selected' : ''} to="/plan">
             PLANOS
@@ -46,7 +46,7 @@ export default function Header() {
           </Link>
         </nav>
         <aside>
-          <span>{profile ? profile.name : ''}</span>
+          <span>{profile ? profile.username : ''}</span>
           <button type="button" onClick={handleSignOut}>
             sair do sistema
           </button>
