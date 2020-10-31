@@ -7,6 +7,7 @@ import SignUp from '~/pages/SignUp';
 
 import Reserve from '~/pages/Reserve';
 import MakeReserve from '~/pages/Reserve/MakeReserve';
+import CreateReserve from '~/pages/Reserve/CreateReserve';
 
 import Enrollment from '~/pages/Enrollment';
 import ManageEnrollment from '~/pages/Enrollment/ManageEnrollment';
@@ -29,6 +30,7 @@ export default function Routes() {
       <Route path="/register" exact component={SignUp} />
 
       <Route path="/reserve" component={Reserve} isPrivate />
+      <Route path="/reservecreate" component={CreateReserve} isPrivate />
       <Route path="/reservemake/:id" component={MakeReserve} isPrivate />
 
       <Route path="/enrollment" component={Enrollment} isPrivate />

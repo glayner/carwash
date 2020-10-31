@@ -21,7 +21,7 @@ export function* sign({ payload }) {
 
     yield put(signSuccess(token.token, user));
 
-    history.push('/student');
+    history.push('/reserve');
   } catch (err) {
     toast.error('Falha na autenticação, verifique seus dados');
     yield put(signFailure());
