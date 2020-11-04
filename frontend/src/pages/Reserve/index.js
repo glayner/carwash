@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 import { signOut } from '~/store/modules/auth/actions';
 import { Container, Content, Cover, Title } from '~/styles/default';
+import history from '~/services/history';
 
 export default function Reserve() {
   const dispatch = useDispatch();
   const isWasher = useSelector(state => state.auth.profile.car_washer);
   const profile = useSelector(state => state.auth.profile);
+  const myWasher = useSelector(state => state.auth.carwash);
 
   const [reserves, setReserves] = useState([]);
 
@@ -55,6 +57,9 @@ export default function Reserve() {
   }
 
   useEffect(() => {
+    if (isWasher && !myWasher) {
+      history.push('/createcarwash');
+    }
     loadReserves();
   }, []); // eslint-disable-line
 

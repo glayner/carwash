@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { Form } from '@rocketseat/unform';
+import { Form as newForm } from '@unform/web';
 
 export const Container = styled.div`
   display: flex;
@@ -215,6 +216,99 @@ export const Formcontent = styled(Form)`
     transition: background 0.2s;
     justify-content: space-around;
     align-items: center;
+
+    &:hover {
+      background: ${darken(0.1, '#009fe3')};
+    }
+
+    > span {
+      font-size: 14px;
+      color: #fff;
+      margin-left: 8px;
+    }
+    svg {
+      margin: 0;
+    }
+  }
+`;
+
+export const NewFormcontent = styled(newForm)`
+  label {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    color: #444;
+    font-size: 14px;
+    font-weight: bold;
+
+    input {
+      border: 1px solid #ddd;
+      background: #fff;
+      font-size: 16px;
+      height: 45px;
+      border-radius: 4px;
+      width: 100%;
+      padding: 10px;
+      color: #666;
+      margin-top: 8px;
+      font-weight: normal;
+    }
+
+    textarea {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 16px;
+      padding: 10px;
+      color: #666;
+      margin-top: 8px;
+      font-weight: normal;
+    }
+
+    input.readOnly {
+      background: #f5f5f5;
+    }
+
+    > span {
+      color: red;
+      font-weight: normal;
+    }
+  }
+
+  label.datetime {
+    display: flex;
+    flex-direction: row;
+    div {
+      margin: 5px;
+      display: block;
+    }
+  }
+
+  div.formline {
+    display: flex;
+
+    strong {
+      margin-bottom: auto;
+    }
+    span {
+      margin: 0;
+      font-weight: normal;
+    }
+  }
+  button {
+    border: 0;
+    background: #009fe3;
+    color: #fff;
+    padding: 0 20px;
+    border-radius: 4px;
+    display: flex;
+    height: 36px;
+    transition: background 0.2s;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px auto;
 
     &:hover {
       background: ${darken(0.1, '#009fe3')};

@@ -9,6 +9,8 @@ import Reserve from '~/pages/Reserve';
 import MakeReserve from '~/pages/Reserve/MakeReserve';
 import CreateReserve from '~/pages/Reserve/CreateReserve';
 
+import CreateCarWash from '~/pages/CreateCarWash';
+
 import Enrollment from '~/pages/Enrollment';
 import ManageEnrollment from '~/pages/Enrollment/ManageEnrollment';
 import RegisterEnrollment from '~/pages/Enrollment/RegisterEnrollment';
@@ -32,6 +34,8 @@ export default function Routes() {
       <Route path="/reserve" component={Reserve} isPrivate />
       <Route path="/reservecreate" component={CreateReserve} isPrivate />
       <Route path="/reservemake/:id" component={MakeReserve} isPrivate />
+
+      <Route path="/createcarwash" component={CreateCarWash} isPrivate />
 
       <Route path="/enrollment" component={Enrollment} isPrivate />
       <Route

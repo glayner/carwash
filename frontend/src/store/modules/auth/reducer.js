@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
   token: null,
   profile: null,
+  carwash: null,
   signed: false,
   loading: false
 };
@@ -25,6 +26,7 @@ export default function auth(state = INITIAL_STATE, action) {
       case '@auth/SIGN_SUCCESS': {
         draft.token = action.payload.token;
         draft.profile = action.payload.user;
+        draft.carwash = action.payload.carwash;
         draft.signed = true;
         draft.loading = false;
         break;
@@ -37,6 +39,19 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       }
       case '@auth/SIGN_FAILURE': {
+        draft.loading = false;
+        break;
+      }
+      case '@auth/CREATE_CARWASH': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/CREATE_CARWASH_SUCCESS': {
+        draft.carwash = action.payload.carwash;
+        draft.loading = false;
+        break;
+      }
+      case '@auth/CREATE_CARWASH_FAIL': {
         draft.loading = false;
         break;
       }

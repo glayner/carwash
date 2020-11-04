@@ -1,46 +1,45 @@
 import { useField } from '@unform/core';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import pt from 'date-fns/locale/pt-BR';
+import ReactTimePicker from 'react-time-picker';
+// import ReactTimePicker from 'react-time-picker/dist/entry.nostyle';
 
-export default function DatePicker({ name, ...rest }) {
+export default function TimePicker({ name, ...rest }) {
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
-  const datepickerRef = useRef(null);
-  const [date, setDate] = useState(defaultValue || null);
+  const timepickerRef = useRef(null);
+  const [time, setTime] = useState(defaultValue || null);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: datepickerRef.current,
+      ref: timepickerRef.current,
       path: 'props.selected',
       clearValue: ref => {
         ref.clear();
       }
     });
   }, [fieldName, registerField]);
+
   return (
     <>
-      <ReactDatePicker
-        ref={datepickerRef}
-        selected={date}
-        onChange={setDate}
-        locale={pt}
-        dateFormat="P"
-        placeholderText="Selecione a data"
+      <ReactTimePicker
+        ref={timepickerRef}
+        selected={time}
+        onChange={setTime}
+        disableClock
+        clearIcon={null}
         {...rest}
       />
       {error && <span className="error">{error}</span>}
     </>
   );
 }
-DatePicker.propTypes = {
+TimePicker.propTypes = {
   name: PropTypes.string.isRequired,
   setChange: PropTypes.func
 };
 
-DatePicker.defaultProps = {
+TimePicker.defaultProps = {
   setChange: PropTypes.null
 };

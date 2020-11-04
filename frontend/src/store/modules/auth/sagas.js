@@ -4,7 +4,13 @@ import { toast } from 'react-toastify';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { signSuccess, signFailure, signUpSuccess } from './actions';
+import {
+  signSuccess,
+  signFailure,
+  signUpSuccess,
+  createCarWashSuccess,
+  createCarWashFail
+} from './actions';
 
 export function* sign({ payload }) {
   try {
@@ -19,7 +25,18 @@ export function* sign({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token.token}`;
 
-    yield put(signSuccess(token.token, user));
+    let carwash = null;
+
+    if (user.car_washer) {
+      try {
+        const responseMyCarWash = yield call(api.get, `mycarwashes/${user.id}`);
+        carwash = responseMyCarWash.data;
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+
+    yield put(signSuccess(token.token, user, carwash));
 
     history.push('/reserve');
   } catch (err) {
@@ -52,6 +69,29 @@ export function* signUp({ payload }) {
   }
 }
 
+export function* createCarWash({ payload }) {
+  try {
+    const { name, address, phone, prices_list, user_id } = payload;
+
+    const response = yield call(api.post, 'carwashes', {
+      name,
+      address,
+      phone,
+      prices_list,
+      user_id
+    });
+
+    toast.success('Lavajato cadastrado com sucesso!');
+
+    yield put(createCarWashSuccess(response.data));
+
+    history.push('/reserve');
+  } catch (err) {
+    toast.error('Erro no cadastro, verifique seus dados');
+    yield put(createCarWashFail());
+  }
+}
+
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -70,5 +110,6 @@ export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_REQUEST', sign),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
-  takeLatest('@auth/SIGN_OUT', signOut)
+  takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/CREATE_CARWASH', createCarWash)
 ]);
