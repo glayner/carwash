@@ -25,10 +25,10 @@ export function signUpSuccess() {
   };
 }
 
-export function signSuccess(token, user, carwash) {
+export function signSuccess(token, user, carwash, car) {
   return {
     type: '@auth/SIGN_SUCCESS',
-    payload: { token, user, carwash }
+    payload: { token, user, carwash, car }
   };
 }
 
@@ -61,5 +61,25 @@ export function createCarWashSuccess(carwash) {
 export function createCarWashFail() {
   return {
     type: '@auth/CREATE_CARWASH_FAIL'
+  };
+}
+
+export function createCar(model, brand, license_plate, user_id) {
+  return {
+    type: '@auth/CREATE_CAR',
+    payload: { model, brand, license_plate, user_id }
+  };
+}
+
+export function createCarSuccess(car) {
+  return {
+    type: '@auth/CREATE_CAR_SUCCESS',
+    payload: { car }
+  };
+}
+
+export function createCarFail() {
+  return {
+    type: '@auth/CREATE_CAR_FAIL'
   };
 }

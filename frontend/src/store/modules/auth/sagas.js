@@ -9,7 +9,9 @@ import {
   signFailure,
   signUpSuccess,
   createCarWashSuccess,
-  createCarWashFail
+  createCarWashFail,
+  createCarFail,
+  createCarSuccess
 } from './actions';
 
 export function* sign({ payload }) {
@@ -26,17 +28,25 @@ export function* sign({ payload }) {
     api.defaults.headers.Authorization = `Bearer ${token.token}`;
 
     let carwash = null;
+    let car = null;
 
     if (user.car_washer) {
       try {
         const responseMyCarWash = yield call(api.get, `mycarwashes/${user.id}`);
         carwash = responseMyCarWash.data;
       } catch (err) {
-        throw new Error(err);
+        toast.warn('Deve ser feito o cadastro do lavajato');
+      }
+    } else {
+      try {
+        const responseMyCar = yield call(api.get, `mycar/${user.id}`);
+        car = responseMyCar.data;
+      } catch (err) {
+        toast.warn('Deve ser feito o cadastro do carro');
       }
     }
 
-    yield put(signSuccess(token.token, user, carwash));
+    yield put(signSuccess(token.token, user, carwash, car));
 
     history.push('/reserve');
   } catch (err) {
@@ -92,6 +102,28 @@ export function* createCarWash({ payload }) {
   }
 }
 
+export function* createCar({ payload }) {
+  try {
+    const { model, brand, license_plate, user_id } = payload;
+
+    const response = yield call(api.post, 'cars', {
+      model,
+      brand,
+      license_plate,
+      user_id
+    });
+
+    toast.success('Carro cadastrado com sucesso!');
+
+    yield put(createCarSuccess(response.data));
+
+    history.push('/reserve');
+  } catch (err) {
+    toast.error('Erro no cadastro, verifique seus dados');
+    yield put(createCarFail());
+  }
+}
+
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -111,5 +143,6 @@ export default all([
   takeLatest('@auth/SIGN_REQUEST', sign),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
-  takeLatest('@auth/CREATE_CARWASH', createCarWash)
+  takeLatest('@auth/CREATE_CARWASH', createCarWash),
+  takeLatest('@auth/CREATE_CAR', createCar)
 ]);

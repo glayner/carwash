@@ -13,8 +13,8 @@ import history from '~/services/history';
 export default function Reserve() {
   const dispatch = useDispatch();
   const isWasher = useSelector(state => state.auth.profile.car_washer);
-  const profile = useSelector(state => state.auth.profile);
   const myWasher = useSelector(state => state.auth.carwash);
+  const myCar = useSelector(state => state.auth.car);
 
   const [reserves, setReserves] = useState([]);
 
@@ -33,24 +33,10 @@ export default function Reserve() {
         )
       }));
       setReserves(data);
-
-      // eslint-disable-next-line no-console
-      console.log(
-        '\n-------------------------------------------------------------\n',
-        data,
-        profile,
-        '\n-------------------------------------------------------------\n'
-      );
     } catch (e) {
       if (e.response && e.response.data.error === 'Token invalid') {
         dispatch(signOut());
       } else {
-        // eslint-disable-next-line no-console
-        console.log(
-          '\n-------------------------------------------------------------\n',
-          e,
-          '\n-------------------------------------------------------------\n'
-        );
         toast.error(e);
       }
     }
@@ -59,6 +45,8 @@ export default function Reserve() {
   useEffect(() => {
     if (isWasher && !myWasher) {
       history.push('/createcarwash');
+    } else if (!isWasher && !myCar) {
+      history.push('/createcar');
     }
     loadReserves();
   }, []); // eslint-disable-line

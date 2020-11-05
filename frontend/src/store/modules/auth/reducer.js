@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   token: null,
   profile: null,
   carwash: null,
+  car: null,
   signed: false,
   loading: false
 };
@@ -27,6 +28,7 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.token = action.payload.token;
         draft.profile = action.payload.user;
         draft.carwash = action.payload.carwash;
+        draft.car = action.payload.car;
         draft.signed = true;
         draft.loading = false;
         break;
@@ -52,6 +54,19 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       }
       case '@auth/CREATE_CARWASH_FAIL': {
+        draft.loading = false;
+        break;
+      }
+      case '@auth/CREATE_CAR': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/CREATE_CAR_SUCCESS': {
+        draft.car = action.payload.car;
+        draft.loading = false;
+        break;
+      }
+      case '@auth/CREATE_CAR_FAIL': {
         draft.loading = false;
         break;
       }

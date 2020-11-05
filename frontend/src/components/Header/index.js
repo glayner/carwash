@@ -33,16 +33,17 @@ export default function Header() {
             RESERVA
           </Link>
           <Link className={newUrl === 'plan' ? 'selected' : ''} to="/plan">
-            PLANOS
+            MINHAS RESERVAS
           </Link>
           <Link
-            className={newUrl === 'enrollment' ? 'selected' : ''}
-            to="/enrollment"
+            className={newUrl === 'myreserve' ? 'selected' : ''}
+            to="/myreserve"
+          />
+          <Link
+            className={newUrl === 'profile' ? 'selected' : ''}
+            to="/profile"
           >
-            MATRÍCULAS
-          </Link>
-          <Link className={newUrl === 'suport' ? 'selected' : ''} to="/suport">
-            PEDIDOS DE AUXÍLIO
+            PERFIL
           </Link>
         </nav>
         <aside>

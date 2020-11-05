@@ -271,18 +271,25 @@ export const NewFormcontent = styled(newForm)`
       background: #f5f5f5;
     }
 
+    .timepicker {
+      width: 100%;
+    }
+    .timepicker > * {
+      border: 0;
+    }
+    .timepicker > * > * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     > span {
       color: red;
       font-weight: normal;
     }
-  }
 
-  label.datetime {
-    display: flex;
-    flex-direction: row;
-    div {
-      margin: 5px;
-      display: block;
+    > strong {
+      margin-top: 10px;
     }
   }
 
