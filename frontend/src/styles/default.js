@@ -268,7 +268,8 @@ export const NewFormcontent = styled(newForm)`
     }
 
     input.readOnly {
-      background: #f5f5f5;
+      background: #ececec;
+      cursor: not-allowed;
     }
 
     .timepicker {
@@ -304,6 +305,7 @@ export const NewFormcontent = styled(newForm)`
       font-weight: normal;
     }
   }
+
   button {
     border: 0;
     background: #009fe3;
@@ -329,5 +331,17 @@ export const NewFormcontent = styled(newForm)`
     svg {
       margin: 0;
     }
+  }
+
+  button.editProfile {
+    margin: 5px 5px 5px auto;
+    width: min-content;
+    background: #ffcc00;
+  }
+
+  button.editProfileClose {
+    margin: 5px 5px 5px auto;
+    width: min-content;
+    background: #d9534f;
   }
 `;

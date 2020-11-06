@@ -32,19 +32,40 @@ export default function Header() {
           >
             RESERVA
           </Link>
-          <Link className={newUrl === 'plan' ? 'selected' : ''} to="/plan">
-            MINHAS RESERVAS
-          </Link>
-          <Link
-            className={newUrl === 'myreserve' ? 'selected' : ''}
-            to="/myreserve"
-          />
+          {profile.car_washer ? (
+            <Link
+              className={newUrl === 'carwashreserve' ? 'selected' : ''}
+              to="/carwashreserve"
+            >
+              RESERVAS LAVAJATO
+            </Link>
+          ) : (
+            <Link
+              className={newUrl === 'myreserve' ? 'selected' : ''}
+              to="/myreserve"
+            >
+              MINHAS RESERVAS
+            </Link>
+          )}
+
           <Link
             className={newUrl === 'profile' ? 'selected' : ''}
             to="/profile"
           >
             PERFIL
           </Link>
+          {profile.car_washer ? (
+            <Link
+              className={newUrl === 'carwash' ? 'selected' : ''}
+              to="/carwash"
+            >
+              LAVAJATO
+            </Link>
+          ) : (
+            <Link className={newUrl === 'car' ? 'selected' : ''} to="/car">
+              CARRO
+            </Link>
+          )}
         </nav>
         <aside>
           <span>{profile ? profile.username : ''}</span>

@@ -70,6 +70,32 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/UPDATE_CAR': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/UPDATE_CAR_SUCCESS': {
+        draft.car = action.payload.car;
+        draft.loading = false;
+        break;
+      }
+      case '@auth/UPDATE_CAR_FAIL': {
+        draft.loading = false;
+        break;
+      }
+      case '@auth/UPDATE_PROFILE': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/UPDATE_PROFILE_SUCCESS': {
+        draft.profile = action.payload.profile;
+        draft.loading = false;
+        break;
+      }
+      case '@auth/UPDATE_PROFILE_FAIL': {
+        draft.loading = false;
+        break;
+      }
       default:
     }
   });

@@ -83,3 +83,42 @@ export function createCarFail() {
     type: '@auth/CREATE_CAR_FAIL'
   };
 }
+
+export function updateCar(model, brand, license_plate, id) {
+  return {
+    type: '@auth/UPDATE_CAR',
+    payload: { model, brand, license_plate, id }
+  };
+}
+
+export function updateCarSuccess(car) {
+  return {
+    type: '@auth/UPDATE_CAR_SUCCESS',
+    payload: { car }
+  };
+}
+
+export function updateCarFail() {
+  return {
+    type: '@auth/UPDATE_CAR_FAIL'
+  };
+}
+export function updateProfile(username, cpf, password, phone, address, id) {
+  return {
+    type: '@auth/UPDATE_PROFILE',
+    payload: { username, cpf, password, phone, address, id }
+  };
+}
+
+export function updateProfileSuccess(profile) {
+  return {
+    type: '@auth/UPDATE_PROFILE_SUCCESS',
+    payload: { profile }
+  };
+}
+
+export function updateProfileFail() {
+  return {
+    type: '@auth/UPDATE_PROFILE_FAIL'
+  };
+}

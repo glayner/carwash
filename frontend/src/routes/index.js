@@ -5,6 +5,8 @@ import CreateCar from '~/pages/CreateCar';
 import Reserve from '~/pages/Reserve';
 import CreateReserve from '~/pages/Reserve/CreateReserve';
 import MakeReserve from '~/pages/Reserve/MakeReserve';
+import Profile from '~/pages/Profile';
+import Car from '~/pages/Car';
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import Route from './Route';
@@ -22,6 +24,10 @@ export default function Routes() {
       <Route path="/createcarwash" component={CreateCarWash} isPrivate />
 
       <Route path="/createcar" component={CreateCar} isPrivate />
+
+      <Route path="/profile" component={Profile} isPrivate />
+
+      <Route path="/car" component={Car} isPrivate />
     </Switch>
   );
 }

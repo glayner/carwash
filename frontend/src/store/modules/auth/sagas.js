@@ -11,7 +11,11 @@ import {
   createCarWashSuccess,
   createCarWashFail,
   createCarFail,
-  createCarSuccess
+  createCarSuccess,
+  updateProfileSuccess,
+  updateProfileFail,
+  updateCarSuccess,
+  updateCarFail
 } from './actions';
 
 export function* sign({ payload }) {
@@ -124,6 +128,54 @@ export function* createCar({ payload }) {
   }
 }
 
+export function* updateProfile({ payload }) {
+  try {
+    const { username, cpf, password, phone, address, id } = payload;
+
+    const data = {};
+
+    if (username) data.username = username;
+    if (cpf) data.cpf = cpf;
+    if (password) data.password = password;
+    if (phone) data.phone = phone;
+    if (address) data.address = address;
+
+    const response = yield call(api.put, `users/${id}`, data);
+
+    toast.success('Perfil atualizado com sucesso!');
+
+    yield put(updateProfileSuccess(response.data));
+
+    history.push('/profile');
+  } catch (err) {
+    toast.error('Erro no cadastro, verifique seus dados');
+    yield put(updateProfileFail());
+  }
+}
+
+export function* updateCar({ payload }) {
+  try {
+    const { model, brand, license_plate, id } = payload;
+
+    const data = {};
+
+    if (model) data.model = model;
+    if (brand) data.brand = brand;
+    if (license_plate) data.license_plate = license_plate;
+
+    const response = yield call(api.put, `cars/${id}`, data);
+
+    toast.success('Carro atualizado com sucesso!');
+
+    yield put(updateCarSuccess(response.data));
+
+    history.push('/car');
+  } catch (err) {
+    toast.error('Erro no cadastro, verifique seus dados');
+    yield put(updateCarFail());
+  }
+}
+
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -144,5 +196,7 @@ export default all([
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
   takeLatest('@auth/CREATE_CARWASH', createCarWash),
-  takeLatest('@auth/CREATE_CAR', createCar)
+  takeLatest('@auth/CREATE_CAR', createCar),
+  takeLatest('@auth/UPDATE_PROFILE', updateProfile),
+  takeLatest('@auth/UPDATE_CAR', updateCar)
 ]);
