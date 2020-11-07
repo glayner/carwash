@@ -29,7 +29,7 @@ export default function MakeReserve({ match }) {
             ...d,
             reserveDateFormatted: format(
               parseISO(d.reserve_date),
-              "dd 'de' MMMM 'de' yyyy",
+              "dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
               {
                 locale: pt
               }

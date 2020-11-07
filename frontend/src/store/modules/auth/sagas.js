@@ -15,7 +15,9 @@ import {
   updateProfileSuccess,
   updateProfileFail,
   updateCarSuccess,
-  updateCarFail
+  updateCarFail,
+  updateCarWashSuccess,
+  updateCarWashFail
 } from './actions';
 
 export function* sign({ payload }) {
@@ -176,6 +178,30 @@ export function* updateCar({ payload }) {
   }
 }
 
+export function* updateCarWash({ payload }) {
+  try {
+    const { name, address, phone, prices_list, id } = payload;
+
+    const data = {};
+
+    if (name) data.name = name;
+    if (address) data.address = address;
+    if (phone) data.phone = phone;
+    if (prices_list) data.prices_list = prices_list;
+
+    const response = yield call(api.put, `carwashes/${id}`, data);
+
+    toast.success('Lavajato atualizado com sucesso!');
+
+    yield put(updateCarWashSuccess(response.data));
+
+    history.push('/carwash');
+  } catch (err) {
+    toast.error('Erro no cadastro, verifique seus dados');
+    yield put(updateCarWashFail());
+  }
+}
+
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -198,5 +224,6 @@ export default all([
   takeLatest('@auth/CREATE_CARWASH', createCarWash),
   takeLatest('@auth/CREATE_CAR', createCar),
   takeLatest('@auth/UPDATE_PROFILE', updateProfile),
-  takeLatest('@auth/UPDATE_CAR', updateCar)
+  takeLatest('@auth/UPDATE_CAR', updateCar),
+  takeLatest('@auth/UPDATE_CARWASH', updateCarWash)
 ]);

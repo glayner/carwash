@@ -1,28 +1,23 @@
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isBefore } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import React, { useEffect, useState } from 'react';
-import { MdAdd } from 'react-icons/md';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '~/services/api';
 import { signOut } from '~/store/modules/auth/actions';
 import { Container, Content, Cover, Title } from '~/styles/default';
-import history from '~/services/history';
 
-export default function Reserve() {
+export default function CarWashReserve() {
   const dispatch = useDispatch();
-  const isWasher = useSelector(state => state.auth.profile.car_washer);
-  const myWasher = useSelector(state => state.auth.carwash);
   const myCar = useSelector(state => state.auth.car);
 
   const [reserves, setReserves] = useState([]);
 
   async function loadReserves() {
     try {
-      const response = await api.get('reserves?type=vacant');
+      const response = await api.get(`cars/${myCar.id}`);
 
-      const data = response.data.map(reserve => ({
+      const data = response.data.reserves.map(reserve => ({
         ...reserve,
         reserveDateFormatted: format(
           parseISO(reserve.reserve_date),
@@ -32,6 +27,7 @@ export default function Reserve() {
           }
         )
       }));
+
       setReserves(data);
     } catch (e) {
       if (e.response && e.response.data.error === 'Token invalid') {
@@ -43,30 +39,39 @@ export default function Reserve() {
   }
 
   useEffect(() => {
-    if (isWasher && !myWasher) {
-      history.push('/createcarwash');
-    } else if (!isWasher && !myCar) {
-      history.push('/createcar');
-    }
     loadReserves();
   }, []); // eslint-disable-line
+
+  const classReserve = useMemo(() => {
+    const data = {};
+
+    reserves.forEach(reserve => {
+      data[reserve.id] = '';
+
+      if (reserve.status === 'finalizado' || reserve.status === 'entregue') {
+        data[reserve.id] = 'reserveDone';
+      } else if (isBefore(parseISO(reserve.reserve_date), new Date())) {
+        data[reserve.id] = 'reservePassed';
+      } else if (reserve.status === 'lavando') {
+        data[reserve.id] = 'reserveDoing';
+      }
+    });
+
+    return data;
+  }, [reserves]);
 
   return (
     <Container>
       <Cover>
         <Title>
-          <h1>Vagas para lavagem</h1>
-          {!!isWasher && (
-            <Link className="register" to="/reservecreate">
-              <MdAdd size={20} color="#FFF" /> <span> CADASTRAR</span>
-            </Link>
-          )}
+          <h1>Minhas Reservas</h1>
         </Title>
         <Content>
           <table>
             <thead>
               <tr>
                 <td>RESERVA</td>
+                <td>CARRO</td>
                 <td>STATUS</td>
                 <td>LAVAJATO</td>
                 <td>ENDEREÇO</td>
@@ -76,20 +81,15 @@ export default function Reserve() {
             </thead>
             <tbody>
               {reserves.map(reserve => (
-                <tr key={reserve.id}>
+                <tr key={reserve.id} className={classReserve[reserve.id]}>
                   <td>{reserve.reserveDateFormatted}</td>
+                  <td>
+                    {myCar.model} - {myCar.brand} - {myCar.license_plate}
+                  </td>
                   <td>{reserve.status}</td>
                   <td>{reserve.carWashers.name}</td>
                   <td>{reserve.carWashers.address}</td>
                   <td>{reserve.carWashers.prices_list}</td>
-                  <td>
-                    <a
-                      className="reservemake"
-                      href={`/reservemake/${reserve.id}`}
-                    >
-                      RESERVAR
-                    </a>
-                  </td>
                 </tr>
               ))}
             </tbody>

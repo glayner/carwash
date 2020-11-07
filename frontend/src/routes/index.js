@@ -1,12 +1,14 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
-import CreateCarWash from '~/pages/CreateCarWash';
+import Car from '~/pages/Car';
+import CarWash from '~/pages/CarWash';
 import CreateCar from '~/pages/CreateCar';
+import CreateCarWash from '~/pages/CreateCarWash';
+import MyReserve from '~/pages/MyReserve';
+import Profile from '~/pages/Profile';
 import Reserve from '~/pages/Reserve';
 import CreateReserve from '~/pages/Reserve/CreateReserve';
 import MakeReserve from '~/pages/Reserve/MakeReserve';
-import Profile from '~/pages/Profile';
-import Car from '~/pages/Car';
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import Route from './Route';
@@ -28,6 +30,10 @@ export default function Routes() {
       <Route path="/profile" component={Profile} isPrivate />
 
       <Route path="/car" component={Car} isPrivate />
+
+      <Route path="/carwash" component={CarWash} isPrivate />
+
+      <Route path="/myreserve" component={MyReserve} isPrivate />
     </Switch>
   );
 }

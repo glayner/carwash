@@ -68,7 +68,7 @@ class CarController {
       .where('id', params.id)
       .with('users')
       .with('reserves', builder => {
-        builder.whereNot('status', 'pronto')
+        builder.orderBy('reserve_date', 'desc')
           .with('carWashers')
       })
       .fetch()).toJSON()

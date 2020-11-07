@@ -83,6 +83,19 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/UPDATE_CARWASH': {
+        draft.loading = true;
+        break;
+      }
+      case '@auth/UPDATE_CARWASH_SUCCESS': {
+        draft.carwash = action.payload.carwash;
+        draft.loading = false;
+        break;
+      }
+      case '@auth/UPDATE_CARWASH_FAIL': {
+        draft.loading = false;
+        break;
+      }
       case '@auth/UPDATE_PROFILE': {
         draft.loading = true;
         break;

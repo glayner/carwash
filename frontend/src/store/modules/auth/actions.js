@@ -103,6 +103,26 @@ export function updateCarFail() {
     type: '@auth/UPDATE_CAR_FAIL'
   };
 }
+
+export function updateCarWash(name, address, phone, prices_list, id) {
+  return {
+    type: '@auth/UPDATE_CARWASH',
+    payload: { name, address, phone, prices_list, id }
+  };
+}
+
+export function updateCarWashSuccess(carwash) {
+  return {
+    type: '@auth/UPDATE_CARWASH_SUCCESS',
+    payload: { carwash }
+  };
+}
+
+export function updateCarWashFail() {
+  return {
+    type: '@auth/UPDATE_CARWASH_FAIL'
+  };
+}
 export function updateProfile(username, cpf, password, phone, address, id) {
   return {
     type: '@auth/UPDATE_PROFILE',

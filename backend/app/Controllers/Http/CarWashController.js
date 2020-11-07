@@ -141,7 +141,6 @@ class CarWashController {
     }
     await carwash.merge(data)
     await carwash.save()
-    await carwash.loadMany(['users', 'reserves'])
     return response.json(carwash)
   }
 

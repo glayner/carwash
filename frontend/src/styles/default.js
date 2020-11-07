@@ -161,6 +161,16 @@ export const Content = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  tr.reserveDone {
+    background-color: #99ff99;
+  }
+  tr.reserveDoing {
+    background-color: #add8e6;
+  }
+  tr.reservePassed {
+    background-color: #c1c1c1;
+  }
 `;
 
 export const Formcontent = styled(Form)`
@@ -268,6 +278,10 @@ export const NewFormcontent = styled(newForm)`
     }
 
     input.readOnly {
+      background: #ececec;
+      cursor: not-allowed;
+    }
+    textarea.readOnly {
       background: #ececec;
       cursor: not-allowed;
     }
