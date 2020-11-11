@@ -71,7 +71,6 @@ export const Cover = styled.div`
       }
       td:first-of-type {
         text-align: left;
-        padding: 10px 150px 10px 0;
       }
       td {
         max-width: 500px;
@@ -84,7 +83,6 @@ export const Cover = styled.div`
       td:last-of-type {
         min-width: 120px;
         font-size: 15px;
-        padding: 10px 0;
         text-align: right;
       }
       > span {

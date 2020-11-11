@@ -55,6 +55,29 @@ export const Wrapper = styled.div`
     }
   }
 
+  a.reservestatus {
+    background: #009fe3;
+    padding: 10px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    transition: background 0.2s;
+    justify-content: space-around;
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      background: ${darken(0.1, '#009fe3')};
+    }
+
+    > span {
+      font-size: 14px;
+      color: #fff;
+      margin-left: 8px;
+    }
+  }
+
   button.reservemake {
     background: #4bb543;
     padding: 10px 20px;

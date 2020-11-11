@@ -5,9 +5,10 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   .selectInput {
-    height: 45px;
+    height: 100%;
     input {
-      height: 23px;
+    height: 100%;
+      /* height: 23px; */
     }
   }
 

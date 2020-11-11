@@ -9,13 +9,13 @@ import { Container, Content, Cover, Title } from '~/styles/default';
 
 export default function CarWashReserve() {
   const dispatch = useDispatch();
-  const myCar = useSelector(state => state.auth.car);
+  const carWash = useSelector(state => state.auth.carwash);
 
   const [reserves, setReserves] = useState([]);
 
   async function loadReserves() {
     try {
-      const response = await api.get(`cars/${myCar.id}`);
+      const response = await api.get(`carwashes/${carWash.id}`);
 
       const data = response.data.reserves.map(reserve => ({
         ...reserve,
@@ -71,11 +71,14 @@ export default function CarWashReserve() {
             <thead>
               <tr>
                 <td>RESERVA</td>
-                <td>CARRO</td>
                 <td>STATUS</td>
-                <td>LAVAJATO</td>
+                <td>VALOR</td>
+                <td>MODELO</td>
+                <td>MARCA</td>
+                <td>PLACA</td>
+                <td>DONO</td>
+                <td>TELEFONE</td>
                 <td>ENDEREÇO</td>
-                <td>DETALHES</td>
                 <td />
               </tr>
             </thead>
@@ -83,13 +86,24 @@ export default function CarWashReserve() {
               {reserves.map(reserve => (
                 <tr key={reserve.id} className={classReserve[reserve.id]}>
                   <td>{reserve.reserveDateFormatted}</td>
-                  <td>
-                    {myCar.model} - {myCar.brand} - {myCar.license_plate}
-                  </td>
                   <td>{reserve.status}</td>
-                  <td>{reserve.carWashers.name}</td>
-                  <td>{reserve.carWashers.address}</td>
-                  <td>{reserve.carWashers.prices_list}</td>
+                  <td>
+                    {reserve.amount === 0 ? 'não definido' : reserve.amount}
+                  </td>
+                  <td>{reserve.cars ? reserve.cars.model : ''}</td>
+                  <td>{reserve.cars ? reserve.cars.brand : ''}</td>
+                  <td>{reserve.cars ? reserve.cars.license_plate : ''}</td>
+                  <td>{reserve.cars ? reserve.cars.users.username : ''}</td>
+                  <td>{reserve.cars ? reserve.cars.users.phone : ''}</td>
+                  <td>{reserve.cars ? reserve.cars.users.address : ''}</td>
+                  <td>
+                    <a
+                      className="reservestatus"
+                      href={`/changestatusreserve/${reserve.id}`}
+                    >
+                      ALTERAR
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>

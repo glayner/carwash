@@ -1,45 +1,54 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useField } from '@unform/core';
 import PropTypes from 'prop-types';
-import { useField } from '@rocketseat/unform';
+import React, { useEffect, useRef } from 'react';
 import Select from 'react-select';
-
 import { Container } from './styles';
 
-export default function ReactSelect({ name, options, setChange }) {
+export default function ReactSelect({ name, ...rest }) {
   const { fieldName, registerField, defaultValue, error } = useField(name);
-  const [value, setValue] = useState(defaultValue && defaultValue);
-  const ref = useRef();
+  const selectRef = useRef(null);
 
-  useEffect(() => setValue(defaultValue), [defaultValue]);
+  // useEffect(() => setValue(defaultValue), [defaultValue]);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: ref.current,
-      path: 'state.value'
+      ref: selectRef.current,
+      getValue: ref => {
+        if (rest.isMulti) {
+          if (!ref.state.value) {
+            return [];
+          }
+          return ref.state.value.map(option => option.value);
+        }
+        if (!ref.state.value) {
+          return '';
+        }
+        return ref.state.value.value;
+      }
     });
-  }, [ref.current, fieldName]); // eslint-disable-line
+  }, [fieldName, registerField, rest.isMulti]); // eslint-disable-line
 
-  function handleChange(data) {
-    setValue(data);
-    if (setChange) {
-      setChange(data);
-    }
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted pink',
+
+    color: state.isSelected && 'red',
+      padding: 20,
+    }),
   }
 
   return (
     <Container>
       <Select
-        name={fieldName}
-        options={options}
-        value={value}
-        defaultValue
-        placeholder="Selecione o plano"
-        onChange={handleChange}
-        ref={ref}
+        styles={customStyles}
+        defaultValue={defaultValue}
+        ref={selectRef}
+        classNamePrefix="react-select"
+        {...rest}
         className="selectInput"
       />
-
       {error && <span>{error}</span>}
     </Container>
   );

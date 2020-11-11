@@ -31,7 +31,10 @@ class StatusReserveController {
       return response.status(400).json({ error: `O compo status deve conter um desses valores: ${statusArray}` })
     }
 
-    if (status === 'lavando' && !amount) {
+    if ((status === 'lavando' ||
+        status === 'finalizado' ||
+        status === 'entregue') &&
+        !amount) {
       return response.status(400).json({ error: 'Informe o valor da lavagem' })
     }
 
