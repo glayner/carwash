@@ -83,12 +83,14 @@ export default function Reserve() {
                   <td>{reserve.carWashers.address}</td>
                   <td>{reserve.carWashers.prices_list}</td>
                   <td>
-                    <a
-                      className="reservemake"
-                      href={`/reservemake/${reserve.id}`}
-                    >
-                      RESERVAR
-                    </a>
+                    {!isWasher && (
+                      <a
+                        className="reservemake"
+                        href={`/reservemake/${reserve.id}`}
+                      >
+                        RESERVAR
+                      </a>
+                    )}
                   </td>
                 </tr>
               ))}

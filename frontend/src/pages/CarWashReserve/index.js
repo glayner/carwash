@@ -50,10 +50,10 @@ export default function CarWashReserve() {
 
       if (reserve.status === 'finalizado' || reserve.status === 'entregue') {
         data[reserve.id] = 'reserveDone';
-      } else if (isBefore(parseISO(reserve.reserve_date), new Date())) {
-        data[reserve.id] = 'reservePassed';
       } else if (reserve.status === 'lavando') {
         data[reserve.id] = 'reserveDoing';
+      } else if (isBefore(parseISO(reserve.reserve_date), new Date())) {
+        data[reserve.id] = 'reservePassed';
       }
     });
 

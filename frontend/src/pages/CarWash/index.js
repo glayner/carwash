@@ -127,7 +127,7 @@ export default function CarWash() {
 
         {edit && (
           <button type="submit">
-            {loading ? 'Carregando...' : 'Editar lavajato'}
+            {loading ? 'Carregando...' : 'Salvar alterações'}
           </button>
         )}
       </NewFormcontent>

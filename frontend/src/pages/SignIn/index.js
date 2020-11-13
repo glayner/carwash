@@ -7,7 +7,10 @@ import logo from '~/assets/logo.png';
 import { signRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
-  cpf: Yup.string().required('O cpf é obrigatório'),
+  cpf: Yup.string()
+    .min(11, 'minimo 11 caracteres')
+    .max(11, 'maximo 11 caracteres')
+    .required('O cpf é obrigatório'),
   password: Yup.string()
     .min(6, 'minimo 6 caracteres')
     .required('A senha é obrigatória')

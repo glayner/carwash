@@ -108,7 +108,7 @@ export default function Car() {
 
         {edit && (
           <button type="submit">
-            {loading ? 'Carregando...' : 'Editar carro'}
+            {loading ? 'Carregando...' : 'Salvar alterações'}
           </button>
         )}
       </NewFormcontent>

@@ -144,7 +144,7 @@ export default function Profile() {
 
         {edit && (
           <button type="submit">
-            {loading ? 'Carregando...' : 'Editar conta'}
+            {loading ? 'Carregando...' : 'Salvar alteração'}
           </button>
         )}
       </NewFormcontent>

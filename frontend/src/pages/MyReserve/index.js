@@ -50,10 +50,10 @@ export default function MyReserve() {
 
       if (reserve.status === 'finalizado' || reserve.status === 'entregue') {
         data[reserve.id] = 'reserveDone';
-      } else if (isBefore(parseISO(reserve.reserve_date), new Date())) {
-        data[reserve.id] = 'reservePassed';
       } else if (reserve.status === 'lavando') {
         data[reserve.id] = 'reserveDoing';
+      } else if (isBefore(parseISO(reserve.reserve_date), new Date())) {
+        data[reserve.id] = 'reservePassed';
       }
     });
 
@@ -73,6 +73,7 @@ export default function MyReserve() {
                 <td>RESERVA</td>
                 <td>CARRO</td>
                 <td>STATUS</td>
+                <td>VALOR</td>
                 <td>LAVAJATO</td>
                 <td>ENDEREÇO</td>
                 <td>DETALHES</td>
@@ -87,6 +88,7 @@ export default function MyReserve() {
                     {myCar.model} - {myCar.brand} - {myCar.license_plate}
                   </td>
                   <td>{reserve.status}</td>
+                  <td>{reserve.amount || 'não informado'}</td>
                   <td>{reserve.carWashers.name}</td>
                   <td>{reserve.carWashers.address}</td>
                   <td>{reserve.carWashers.prices_list}</td>
